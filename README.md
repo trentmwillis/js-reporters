@@ -87,12 +87,14 @@ The data structures are defined as follows:
  - **status**: `String` - summarized status of the suite.
     - `failed`, if at least one test in the suite or in its child suites has failed.
     - `skipped`, if all tests in the suite and in its child suites are skipped (and there is at least one skipped test).
-    - `passed`, if there is at least one passed test in the suite or in its child suites and all other tests are skipped or if there are no tests in the suite.
+    - `todo`, if all tests in the suite and in its child suites are todo (and there is at least one todo test).
+    - `passed`, if there is at least one passed test in the suite or in its child suites and all other tests are skipped or todo, or if there are no tests in the suite.
  - **testCounts**: `Object` - contains how many tests have passed, failed etc. including the tests of child suites.
     - **passed**: `Number` - number of passed tests.
     - **failed**: `Number` - number of failed tests.
     - **skipped**: `Number` - number of skipped tests.
-    - **total**: `Number` - total number of tests, the sum of the above 3 properties must equal this one.
+    - **todo**: `Number` - number of todo tests.
+    - **total**: `Number` - total number of tests, the sum of the above properties must equal this one.
  - **runtime**: `Number` - execution time of the whole suite in milliseconds (including child suites).
  
 The above `suite properties` apply also for the `globalSuite`.
@@ -108,8 +110,9 @@ The above `suite properties` apply also for the `globalSuite`.
  - **fullName**: `Array` - array of strings containing the name of the test and the names of all its suites ancestors.
  - **status**: `String` - result of the test. Can be:
     - `passed`, if all assertions have passed.
-    - `failed`, if at least one assertion has failed.
+    - `failed`, if at least one assertion has failed or if the test is todo and all assertions passed.
     - `skipped`, if the test is disabled and wasn't executed.
+    - `todo`, if the test is todo and at least one assertion failed.
  - **runtime**: `Number` - execution time in milliseconds.
  - **errors**: `Array` - array containing all errors, i.e failed Assertions. It will contain at least one error for failed statuses and it will be empty for statuses other than failed.
  - **assertions**: `Array` - array of Assertions containing all assertions passed and failed, for a skipped test there will be an empty array. Frameworks that don't track passed assertions can always provide an empty array for passed tests. In that case, for failed tests this should match the errors property.
